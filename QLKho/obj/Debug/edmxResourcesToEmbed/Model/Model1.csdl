@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLKHOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="QLKHOEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="QLKHOModel.Customer" />
+    <EntitySet Name="Inputs" EntityType="QLKHOModel.Input" />
+    <EntitySet Name="InputInFoes" EntityType="QLKHOModel.InputInFo" />
+    <EntitySet Name="Objects" EntityType="QLKHOModel.Object" />
+    <EntitySet Name="Outputs" EntityType="QLKHOModel.Output" />
+    <EntitySet Name="OutputInfoes" EntityType="QLKHOModel.OutputInfo" />
+    <EntitySet Name="Roles" EntityType="QLKHOModel.Role" />
+    <EntitySet Name="Supliers" EntityType="QLKHOModel.Suplier" />
+    <EntitySet Name="Units" EntityType="QLKHOModel.Unit" />
+    <EntitySet Name="Users" EntityType="QLKHOModel.User" />
+    <AssociationSet Name="FK__OutputInf__IdCus__2A4B4B5E" Association="QLKHOModel.FK__OutputInf__IdCus__2A4B4B5E">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="OutputInfo" EntitySet="OutputInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InputInFo__IdInp__239E4DCF" Association="QLKHOModel.FK__InputInFo__IdInp__239E4DCF">
+      <End Role="Input" EntitySet="Inputs" />
+      <End Role="InputInFo" EntitySet="InputInFoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InputInFo__IdObj__22AA2996" Association="QLKHOModel.FK__InputInFo__IdObj__22AA2996">
+      <End Role="Object" EntitySet="Objects" />
+      <End Role="InputInFo" EntitySet="InputInFoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Object__IdSuplie__173876EA" Association="QLKHOModel.FK__Object__IdSuplie__173876EA">
+      <End Role="Suplier" EntitySet="Supliers" />
+      <End Role="Object" EntitySet="Objects" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Object__IdUnit__164452B1" Association="QLKHOModel.FK__Object__IdUnit__164452B1">
+      <End Role="Unit" EntitySet="Units" />
+      <End Role="Object" EntitySet="Objects" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OutputInf__IdObj__286302EC" Association="QLKHOModel.FK__OutputInf__IdObj__286302EC">
+      <End Role="Object" EntitySet="Objects" />
+      <End Role="OutputInfo" EntitySet="OutputInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OutputInf__IdOut__29572725" Association="QLKHOModel.FK__OutputInf__IdOut__29572725">
+      <End Role="Output" EntitySet="Outputs" />
+      <End Role="OutputInfo" EntitySet="OutputInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Email__1BFD2C07" Association="QLKHOModel.FK__Users__Email__1BFD2C07">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MoreInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContractDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OutputInfoes" Relationship="QLKHOModel.FK__OutputInf__IdCus__2A4B4B5E" FromRole="Customer" ToRole="OutputInfo" />
+  </EntityType>
+  <EntityType Name="Input">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="DateInput" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InputInFoes" Relationship="QLKHOModel.FK__InputInFo__IdInp__239E4DCF" FromRole="Input" ToRole="InputInFo" />
+  </EntityType>
+  <EntityType Name="InputInFo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IdObject" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IdInput" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Count" Type="Int32" />
+    <Property Name="InputPrice" Type="Double" />
+    <Property Name="OutputPrice" Type="Double" />
+    <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Input" Relationship="QLKHOModel.FK__InputInFo__IdInp__239E4DCF" FromRole="InputInFo" ToRole="Input" />
+    <NavigationProperty Name="Object" Relationship="QLKHOModel.FK__InputInFo__IdObj__22AA2996" FromRole="InputInFo" ToRole="Object" />
+  </EntityType>
+  <EntityType Name="Object">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdUnit" Type="Int32" Nullable="false" />
+    <Property Name="IdSuplier" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="QRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BarCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InputInFoes" Relationship="QLKHOModel.FK__InputInFo__IdObj__22AA2996" FromRole="Object" ToRole="InputInFo" />
+    <NavigationProperty Name="Suplier" Relationship="QLKHOModel.FK__Object__IdSuplie__173876EA" FromRole="Object" ToRole="Suplier" />
+    <NavigationProperty Name="Unit" Relationship="QLKHOModel.FK__Object__IdUnit__164452B1" FromRole="Object" ToRole="Unit" />
+    <NavigationProperty Name="OutputInfoes" Relationship="QLKHOModel.FK__OutputInf__IdObj__286302EC" FromRole="Object" ToRole="OutputInfo" />
+  </EntityType>
+  <EntityType Name="Output">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="DateOutput" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OutputInfoes" Relationship="QLKHOModel.FK__OutputInf__IdOut__29572725" FromRole="Output" ToRole="OutputInfo" />
+  </EntityType>
+  <EntityType Name="OutputInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IdObject" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IdOutput" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Customer" Relationship="QLKHOModel.FK__OutputInf__IdCus__2A4B4B5E" FromRole="OutputInfo" ToRole="Customer" />
+    <NavigationProperty Name="Object" Relationship="QLKHOModel.FK__OutputInf__IdObj__286302EC" FromRole="OutputInfo" ToRole="Object" />
+    <NavigationProperty Name="Output" Relationship="QLKHOModel.FK__OutputInf__IdOut__29572725" FromRole="OutputInfo" ToRole="Output" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="QLKHOModel.FK__Users__Email__1BFD2C07" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Suplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MoreInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContractDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Objects" Relationship="QLKHOModel.FK__Object__IdSuplie__173876EA" FromRole="Suplier" ToRole="Object" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Objects" Relationship="QLKHOModel.FK__Object__IdUnit__164452B1" FromRole="Unit" ToRole="Object" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PassWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="IdRole" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Role" Relationship="QLKHOModel.FK__Users__Email__1BFD2C07" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK__OutputInf__IdCus__2A4B4B5E">
+    <End Type="QLKHOModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="QLKHOModel.OutputInfo" Role="OutputInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutputInfo">
+        <PropertyRef Name="IdCustomer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InputInFo__IdInp__239E4DCF">
+    <End Type="QLKHOModel.Input" Role="Input" Multiplicity="1" />
+    <End Type="QLKHOModel.InputInFo" Role="InputInFo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Input">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InputInFo">
+        <PropertyRef Name="IdInput" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InputInFo__IdObj__22AA2996">
+    <End Type="QLKHOModel.Object" Role="Object" Multiplicity="1" />
+    <End Type="QLKHOModel.InputInFo" Role="InputInFo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Object">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InputInFo">
+        <PropertyRef Name="IdObject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Object__IdSuplie__173876EA">
+    <End Type="QLKHOModel.Suplier" Role="Suplier" Multiplicity="1" />
+    <End Type="QLKHOModel.Object" Role="Object" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Object">
+        <PropertyRef Name="IdSuplier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Object__IdUnit__164452B1">
+    <End Type="QLKHOModel.Unit" Role="Unit" Multiplicity="1" />
+    <End Type="QLKHOModel.Object" Role="Object" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Object">
+        <PropertyRef Name="IdUnit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OutputInf__IdObj__286302EC">
+    <End Type="QLKHOModel.Object" Role="Object" Multiplicity="1" />
+    <End Type="QLKHOModel.OutputInfo" Role="OutputInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Object">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutputInfo">
+        <PropertyRef Name="IdObject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OutputInf__IdOut__29572725">
+    <End Type="QLKHOModel.Output" Role="Output" Multiplicity="1" />
+    <End Type="QLKHOModel.OutputInfo" Role="OutputInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Output">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutputInfo">
+        <PropertyRef Name="IdOutput" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Email__1BFD2C07">
+    <End Type="QLKHOModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="QLKHOModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
